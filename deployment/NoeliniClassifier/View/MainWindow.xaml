@@ -1,0 +1,51 @@
+﻿<Window x:Class="NoeliniClassifier.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:view="clr-namespace:NoeliniClassifier.View"
+        mc:Ignorable="d"
+        Title="Noelinis"
+        MinWidth="520" MinHeight="320"
+        MaxWidth="520" MaxHeight="320"
+        Icon="/Resources/Pat.png"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <view:WebcamView
+            Grid.RowSpan="2"
+            Margin="20"
+            x:Name="WebcamStream"/>
+        
+        <view:NoeliniView
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            NoeliniId="{Binding NoeliniId}"/>
+
+        <StackPanel
+            Grid.Column="1"
+            Grid.Row="1"
+            Margin="20">
+            <TextBlock 
+                Text="{Binding ConfidenceLevel}"
+                HorizontalAlignment="Center"
+                FontSize="16"
+                FontWeight="Bold"/>
+            <TextBlock
+                Text="percent confident"
+                HorizontalAlignment="Center"
+                FontWeight="Bold"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

@@ -16,9 +16,9 @@ My thanks go to all those who helped me collect the _Noelinis_. The first step c
 
 I collected 9 minutes' worth of video per _Noelini_ (plus the case where no _Noelini_ was on stage), zooming, translating and rotating the camera, to foster the necessary position and angle invariance when learning the model.
 
-Next I cropped and scaled the [videos to 64 by 64 pixels](https://github.com/ckauth/AI_Noelinis/blob/master/data/movies/64x64) only. That is by far enough to recognize the _Noelinis_ reliably. Although I do not provide the original movies, you may find the [script](https://github.com/ckauth/AI_Noelinis/blob/master/data/movies/mute_scale_crop_movies.py), which I used for that operation, useful. It calls [ffmpeg](https://www.ffmpeg.org/) under the hood.
+Next I cropped and scaled the [videos to 64 by 64 pixels](https://github.com/ckauth/AI_Noelinis/blob/master/data/movies/64x64) only. That is by far enough to recognize the _Noelinis_ reliably. Although I do not provide the original movies, you may find the [script](https://github.com/ckauth/AI_Noelinis/blob/master/data/mute_scale_crop_movies.py), which I used for that operation, useful. It calls [ffmpeg](https://www.ffmpeg.org/) under the hood.
 
-A second [script](https://github.com/ckauth/AI_Noelinis/blob/master/data/movies/extract_frames.py) saves the movies' frames as individual images. Shootings 1 through 5 are used for training, while shooting 6 is reserved for testing. Additionally, the script computes the [average image](https://github.com/ckauth/AI_Noelinis/blob/master/data/images/64x64/mean_image.xml), which is used for model training, and it composes the [training](https://github.com/ckauth/AI_Noelinis/data/images/64x64/train_map.txt) and [test maps](https://github.com/ckauth/AI_Noelinis/blob/master/data/images/64x64/test_map.txt). A few of those nearly [70'000 64 by 64 pixels images](https://github.com/ckauth/AI_Noelinis/blob/master/data/images/64x64) are shown here below.
+A second [script](https://github.com/ckauth/AI_Noelinis/blob/master/data/extract_frames.py) saves the movies' frames as individual images. Shootings 1 through 5 are used for training, while shooting 6 is reserved for testing. Additionally, the script computes the [average image](https://github.com/ckauth/AI_Noelinis/blob/master/data/images/64x64/mean_image.xml), which is used for model training, and it composes the [training](https://github.com/ckauth/AI_Noelinis/blob/master/data/images/64x64/train_map.txt) and [test maps](https://github.com/ckauth/AI_Noelinis/blob/master/data/images/64x64/test_map.txt). A few of those nearly [70'000 64 by 64 pixels images](https://github.com/ckauth/AI_Noelinis/blob/master/data/images/64x64) are shown here below.
 
 ![Patchwork](https://github.com/ckauth/AI_Noelinis/blob/master/illustrations/patchwork.png)
 
@@ -29,7 +29,7 @@ I opted for a relatively traditional model as skeleton of the _Noelini_ classifi
 
 For the training, I used Microsoft's Cognitive Toolkit (CNTK) via Python.  I let it iterate for 20 epochs on the dataset that included 26 different _Noelinis_, with decreasing learning rate. If you are interested in the details, feel free to have a close look at the [code](https://github.com/ckauth/AI_Noelinis/blob/master/training/train_model.py). I had no aspirations whatsoever to optimize the parameters - sometimes good enough is good enough.
 
-The success rate on the training data approaches 99%, and beyond 95% are achieved on the test data. Note that this slight discrepancy has a partial explanation in the fact that the training and testing data are not randomly sampled, but belong to very different shootings and background clips.
+The success rate on the training data approaches 99%, and exceeds 95% on the test data. Note that this slight discrepancy has a partial explanation in the fact that the training and testing data are not randomly sampled, but belong to very different shootings and background clips.
 
 ```bash
 Training 665135 parameters in 22 parameter tensors.
@@ -65,7 +65,7 @@ Finished Epoch[20 of 20]: [Training] loss = 0.054067 * 50000, metric = 1.39% * 5
 Final Results: Minibatch[1-626]: errs = 3.7% * 10000
 ```
 
-Upon completion of the training, the algorithm stores the [model](https://github.com/ckauth/AI_Noelinis/blob/master/training/NoeliniModel.dnn). You may test the performance of the model on single images of your choice with this [script](https://github.com/ckauth/AI_Noelinis/blob/master/training/evaluate_mdoel.py).
+Upon completion of the training, the algorithm stores the [model](https://github.com/ckauth/AI_Noelinis/blob/master/training/NoeliniModel.dnn). You may test the performance of the model on single images of your choice with this [script](https://github.com/ckauth/AI_Noelinis/blob/master/training/evaluate_model.py).
 
 # Deployment
 
@@ -75,11 +75,11 @@ The app shows a continuous preview of the webcam and takes a screen capture of t
 
 As of today, the code compiles for 64-bit targets only. Note that you may need to customize a few parameters for your machine too - my objective here was to implement an end-to-end AI scenario, not to write a store-grade app.
 
-_Note:_ Out of the 32 _Noelinins_ featured in the demo video, 21 were part of the training set, while 11 were seen for the first time during the demo.
+_Note:_ Out of the 32 _Noelinis_ featured in the demo video, 21 were part of the training set, while 11 were seen for the first time during the demo.
 
 # User Guide
 
-To run the code in the [data folder](https://github.com/ckauth/AI_Noelinis/data/), you must have [ffmpeg](https://www.ffmpeg.org/) installed.
+To run the code in the [data folder](https://github.com/ckauth/AI_Noelinis/blob/master/data/), you must have [ffmpeg](https://www.ffmpeg.org/) installed.
 
 To run the code in the [training folder](https://github.com/ckauth/AI_Noelinis/blob/master/training/), you need an environment with matching versions of [CNTK](https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-your-machine) and [Python](https://www.python.org/downloads/).
 
